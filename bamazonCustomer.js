@@ -44,14 +44,27 @@ function runAskUser() {
         "purchase a product?",
         "exit"
       ]
-    }).then(function(answer) {
+    })
+    .then(function(answer) {
       switch (answer.action) {
-      case "Find songs by artist":
-        artistSearch();
+      case "purchase a product?":
+        purchaseItem();
         break;
+      
+        case "exit":
+          connection.end();
+          break;
       }
-});
+    });
+}
 
-
+function purchaseItem() {
+  inquirer
+    .prompt({
+      name:"item_id",
+      type: "input",
+      message: "what is the item_id of the product you would like to buy?",
+    })
+  
 }
 
