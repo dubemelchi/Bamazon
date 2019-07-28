@@ -26,7 +26,9 @@ function displayProducts() {
  function(err, res) {
   if (err) throw err;
 
+  //console.log("item_id: " + res[0].item_id + " || product_name: " + res[0].product_name + " || price: " + res[0].price);
   console.log(res);
   connection.end();
  });
 }
+
