@@ -1,4 +1,5 @@
 var mysql = require("mysql");
+var inquirer = require("inquirer");
 
 var connection = mysql.createConnection({
  host: "localhost",
@@ -17,10 +18,13 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
  if (err) throw err;
  console.log("connected as id " + connection.threadId + "\n");
- displayProducts();
+
+ runAskUser()
+ 
 });
 
-function displayProducts() {
+function runAskUser() {
+
  console.log("selecting all products...\n");
  connection.query("SELECT * FROM products",
  function(err, res) {
@@ -28,7 +32,26 @@ function displayProducts() {
 
   //console.log("item_id: " + res[0].item_id + " || product_name: " + res[0].product_name + " || price: " + res[0].price);
   console.log(res);
-  connection.end();
+  //connection.end();
  });
+
+ inquirer
+  .prompt({
+      name: "action",
+      type: "list",
+      message: "What would you like to do?",
+      choices: [
+        "purchase a product?",
+        "exit"
+      ]
+    }).then(function(answer) {
+      switch (answer.action) {
+      case "Find songs by artist":
+        artistSearch();
+        break;
+      }
+});
+
+
 }
 
