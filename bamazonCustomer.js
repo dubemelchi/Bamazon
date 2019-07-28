@@ -65,6 +65,21 @@ function purchaseItem() {
       type: "input",
       message: "what is the item_id of the product you would like to buy?",
     })
+    .then(function(answer) {
+      console.log(answer.item_id);
+      connection.query("SELECT * FROM products WHERE ?", {item_id: answer.item_id }, function(err, res) 
+      {
+        console.log(
+          "item_id: " + 
+          res[0].item_id + 
+          " || product_name: " + 
+          res[0].product_name +
+          " || price: " + 
+          res[0].price
+        );
+        //runAskUser();
+      });
+    });
   
 }
 
