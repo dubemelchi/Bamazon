@@ -55,7 +55,7 @@ function askUser() {
     },
 
   {
-    name: "howMany",
+    name: "quantity",
     type: "input",
     message: "Please enter how many.",
   }
@@ -70,7 +70,7 @@ function askUser() {
 
       if (itemQuantity >= userQuantity) {
 
-        var updatedStock = intemQuantity - userQuantity;
+        var updatedStock = itemQuantity - userQuantity;
         var totalPrice = res[0].price * userQuantity;
         var itemPurchased = res[0].product_name;
 
@@ -92,6 +92,8 @@ function askUser() {
             console.log("Items purchased: " + itemPurchased);
             console.log("Quantity: " + itemQuantity);
             console.log("Total: $" + totalPrice);
+
+            askUser();
           }
         
         );
@@ -100,7 +102,7 @@ function askUser() {
         console.log("------------");
         console.log("Out of stock");
         
-
+        askUser();
       }
     });
   });
