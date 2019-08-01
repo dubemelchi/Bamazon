@@ -19,11 +19,11 @@ connection.connect(function(err) {
  if (err) throw err;
  console.log("connected as id " + connection.threadId + "\n");
 
- runAskUser()
+ showInventory()
  
 });
 
-function runAskUser () {
+function showInventory () {
   connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw err;
 
@@ -36,5 +36,33 @@ function runAskUser () {
       console.log("Department: " + res[i].department_name);
       console.log("Price: " + res[i].price);
     }
+
+    askUser();
+    
+  });
+
+}
+
+function askUser() {
+  connection.query("SELECT * FROM products", function(err, res) {
+    if (err) throw err;
+
+    inquirer.prompt([
+      {
+        name: "askId",
+        type: "input",
+        message: "Please enter ID of Item you'd like to buy.",
+    },
+
+  {
+    name: "quantity",
+    type: "input",
+    message: "Please enter quantity.",
+  }
+
+])
+  .then (function (answers) {
+    
+  })
   })
 }
