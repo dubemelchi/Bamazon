@@ -19,9 +19,34 @@ connection.connect(function (err) {
  if (err) throw err;
  console.log("connected as id " + connection.threadId + "\n");
 
- showInventory()
+ promptUser();
  
 });
+
+function promptUser() {
+  inquirer
+    .prompt({
+      name: "action",
+      type: "list",
+      message: "What would you like to do?",
+      choices: [
+        "make a purchase.",
+        "exit"
+      ]
+    })
+    .then(function(answer) {
+      switch (answer.action) {
+      case "make a purchase.":
+        showInventory();
+          break;
+          
+      case "exit":
+        connection.end();
+        break;
+      }
+    });
+}
+
 
 function showInventory () {
   connection.query("SELECT * FROM products", function (err, res) {
@@ -58,7 +83,8 @@ function askUser() {
     name: "quantity",
     type: "input",
     message: "Please enter how many.",
-  }
+  },
+
 
 ])
   .then (function (answers) {
@@ -93,7 +119,7 @@ function askUser() {
             console.log("Quantity: " + itemQuantity);
             console.log("Total: $" + totalPrice);
 
-            askUser();
+            promptUser();
           }
         
         );
@@ -102,7 +128,7 @@ function askUser() {
         console.log("------------");
         console.log("Out of stock");
         
-        askUser();
+        promptUser();
       }
     });
   });
