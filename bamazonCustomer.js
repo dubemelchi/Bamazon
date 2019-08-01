@@ -32,6 +32,9 @@ function runAskUser () {
 
     for (var i = 0; i < res.length; i++) {
       console.log("Item Id: " + res[i].item_id);
+      console.log("Item: " + res[i].product_name);
+      console.log("Department: " + res[i].department_name);
+      console.log("Price: " + res[i].price);
     }
   })
 }
