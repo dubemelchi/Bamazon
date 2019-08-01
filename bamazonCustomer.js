@@ -23,79 +23,13 @@ connection.connect(function(err) {
  
 });
 
-function runAskUser() {
+function runAskUser () {
+  connection.query("SELECT * FROM products", function (err, res) {
+    if (err) throw err;
 
- console.log("selecting all products...\n");
- connection.query("SELECT * FROM products",
- function(err, res) {
-  if (err) throw err;
+    console.log("Bamazon")
+    console.log("--------")
 
-  //console.log("item_id: " + res[0].item_id + " || product_name: " + res[0].product_name + " || price: " + res[0].price);
-  console.log(res);
-  //connection.end();
- });
-
- // function to ask customer for quantity
-
-
- inquirer
-  .prompt({
-      name: "action",
-      type: "list",
-      message: "What would you like to do?",
-      choices: [
-        "purchase a product?",
-        "exit"
-      ]
-    })
-    .then(function(answer) {
-      switch (answer.action) {
-      case "purchase a product?":
-        purchaseItem();
-        break;
-      
-        case "exit":
-          connection.end();
-          break;
-      }
-    });
-}
-
-function purchaseItem() {
-  inquirer
-    .prompt({
-      name:"item_id",
-      type: "input",
-      message: "what is the item_id of the product you would like to buy?",
-    })
-    .then(function(answer) {
-      console.log(answer.item_id);
-      connection.query("SELECT * FROM products WHERE ?", {item_id: answer.item_id }, function(err, res) 
-      {
-        console.log(
-          "item_id: " + 
-          res[0].item_id + 
-          " || product_name: " + 
-          res[0].product_name +
-          " || price: " + 
-          res[0].price
-        );
-
-        askQuantity();
-        
-         function askQuantity () {
-            inquirer
-              .prompt({
-                name:"stock_quantity",
-                type: "input",
-                message: "how many would you like to buy?",
-                });
-            } 
-      });
-    })
     
-    
-  
+  })
 }
-
-
