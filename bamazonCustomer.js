@@ -35,6 +35,9 @@ function runAskUser() {
   //connection.end();
  });
 
+ // function to ask customer for quantity
+
+
  inquirer
   .prompt({
       name: "action",
@@ -77,9 +80,22 @@ function purchaseItem() {
           " || price: " + 
           res[0].price
         );
-        //runAskUser();
+
+        askQuantity();
+        
+         function askQuantity () {
+            inquirer
+              .prompt({
+                name:"stock_quantity",
+                type: "input",
+                message: "how many would you like to buy?",
+                });
+            } 
       });
-    });
+    })
+    
+    
   
 }
+
 
