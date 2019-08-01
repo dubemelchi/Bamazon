@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
  database: "bamazon"
 });
 
-connection.connect(function(err) {
+connection.connect(function (err) {
  if (err) throw err;
  console.log("connected as id " + connection.threadId + "\n");
 
@@ -34,7 +34,7 @@ function showInventory () {
       console.log("Item Id: " + res[i].item_id);
       console.log("Item: " + res[i].product_name);
       console.log("Department: " + res[i].department_name);
-      console.log("Price: " + res[i].price);
+      console.log("Price: $" + res[i].price);
     }
 
     askUser();
@@ -55,15 +55,15 @@ function askUser() {
     },
 
   {
-    name: "quantity",
+    name: "howMany",
     type: "input",
-    message: "Please enter quantity.",
+    message: "Please enter how many.",
   }
 
 ])
   .then (function (answers) {
     var query = "SELECT * FROM products WHERE ?";
-    connection.query(query, {item_id: answers.askId}), function (err, res) {
+    connection.query(query, {item_id: answers.askId}, function (err, res) {
 
       var itemQuantity = res[0].stock_quantity;
       var userQuantity = answers.quantity;
@@ -75,8 +75,34 @@ function askUser() {
         var itemPurchased = res[0].product_name;
 
         console.log("Total price: " + totalPrice);
+
+        connection.query("UPDATE products SET ? WHERE ?", [
+          {
+            stock_quantity: updatedStock
+          },
+          {
+            item_id: answers.askId
+          }
+        ],
+          function (error) {
+
+            if (error) throw err;
+
+            console.log("summary:");
+            console.log("Items purchased: " + itemPurchased);
+            console.log("Quantity: " + itemQuantity);
+            console.log("Total: $" + totalPrice);
+          }
+        
+        );
+      } else {
+
+        console.log("------------");
+        console.log("Out of stock");
+        
+
       }
-    }
-  })
-  })
+    });
+  });
+  });
 }
