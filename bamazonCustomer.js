@@ -39,7 +39,7 @@ function promptUser() {
       case "make a purchase.":
         showInventory();
           break;
-          
+
       case "exit":
         connection.end();
         break;
@@ -116,7 +116,7 @@ function askUser() {
 
             console.log("summary:");
             console.log("Items purchased: " + itemPurchased);
-            console.log("Quantity: " + itemQuantity);
+            console.log("Quantity: " + userQuantity);
             console.log("Total: $" + totalPrice);
 
             promptUser();
