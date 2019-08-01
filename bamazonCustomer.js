@@ -30,6 +30,8 @@ function runAskUser () {
     console.log("Bamazon")
     console.log("--------")
 
-    
+    for (var i = 0; i < res.length; i++) {
+      console.log("Item Id: " + res[i].item_id);
+    }
   })
 }
