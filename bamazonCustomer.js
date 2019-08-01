@@ -62,7 +62,21 @@ function askUser() {
 
 ])
   .then (function (answers) {
-    
+    var query = "SELECT * FROM products WHERE ?";
+    connection.query(query, {item_id: answers.askId}), function (err, res) {
+
+      var itemQuantity = res[0].stock_quantity;
+      var userQuantity = answers.quantity;
+
+      if (itemQuantity >= userQuantity) {
+
+        var updatedStock = intemQuantity - userQuantity;
+        var totalPrice = res[0].price * userQuantity;
+        var itemPurchased = res[0].product_name;
+
+        console.log("Total price: " + totalPrice);
+      }
+    }
   })
   })
 }
